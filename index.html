@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Snack</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ICON -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">
+        <img src="logo.png/logo.png" alt="logo">
+        <h2>Happy Snack</h2>
+    </div>
+
+    <div class="search-box">
+        <input type="text" placeholder="Cari produk...">
+        <button><i class="fa fa-search"></i></button>
+    </div>
+
+    <div class="nav-icons">
+    <a href="login.php"><i class="fa fa-user"></i></a>
+    <i class="fa fa-shopping-cart"></i>
+    <i class="fa fa-bars" onclick="toggleMenu()"></i>
+</div>
+</header>
+
+<!-- SIDEBAR MENU -->
+<div id="sidebar" class="sidebar">
+    <a href="#">Home</a>
+    <a href="#">Produk</a>
+    <a href="#">Kontak</a>
+    <a href="#">Informasi</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Toko Spesial Snack</h1>
+        <p>Temukan berbagai snack enak dan berkualitas</p>
+
+        <div class="search-hero">
+            <input type="text" placeholder="Cari snack favoritmu...">
+            <button>🔍</button>
+        </div>
+    </div>
+</section>
+
+<!-- KATEGORI -->
+<section class="kategori">
+    <h2>Kategori Produk</h2>
+
+    <div class="kategori-container">
+        <div class="card">
+            <img src="logo.png/snackkering.jpeg">
+            <h3>Snack Kering</h3>
+        </div>
+
+        <div class="card">
+            <img src="logo.png/kuekering.jpeg">
+            <h3>Kue Kering</h3>
+        </div>
+    </div>
+</section>
+
+<section class="info-tambahan">
+
+    <div class="info-box">
+        <h4>Pembayaran</h4>
+        <div class="icons">
+            <img src="https://img.icons8.com/color/48/visa.png"/>
+            <img src="https://img.icons8.com/color/48/mastercard.png"/>
+            <img src="https://img.icons8.com/color/48/paypal.png"/>
+            <img src="https://img.icons8.com/color/48/apple-pay.png"/>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h4>Ulasan</h4>
+        <p class="rating">⭐⭐⭐⭐⭐</p>
+        <p>Rating 4.8 | 230 reviews</p>
+    </div>
+
+    <div class="info-box">
+        <h4>Pengiriman</h4>
+        <div class="icons">
+            <img src="https://img.icons8.com/ios-filled/50/000000/delivery.png"/>
+            <img src="https://img.icons8.com/ios-filled/50/000000/shipped.png"/>
+        </div>
+        <p>Pengiriman cepat & aman</p>
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+
+        <div>
+            <h3>Happy Snack</h3>
+            <p>Menyediakan berbagai snack enak dan berkualitas.</p>
+        </div>
+
+        <div>
+            <h4>Menu</h4>
+            <p>Home</p>
+            <p>Produk</p>
+            <p>Kategori</p>
+        </div>
+
+        <div>
+            <h4>Kontak</h4>
+            <p>📞 0812-3456-7890</p>
+            <p>📧 happysnack@gmail.com</p>
+        </div>
+
+    </div>
+
+    <p class="copyright">© 2026 Happy Snack</p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 14px;
+}
+.v118_826 {
+  width: 100%;
+  height: 1101px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.v118_827 {
+  width: 335px;
+  height: 100%;
+  background: rgba(171,53,0,1);
+  opacity: 1;
+  position: absolute;
+  top: 81px;
+  left: 0px;
+  overflow: hidden;
+}
+.v118_828 {
+  width: 255px;
+  height: 36px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 108px;
+  left: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v118_829 {
+  width: 176px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 112px;
+  left: 65px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_831 {
+  width: 203px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 31px;
+  left: 77px;
+  font-family: Inter;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_832 {
+  width: 32px;
+  color: rgba(240,140,0,1);
+  position: absolute;
+  top: 23px;
+  left: 25px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 32px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_833 {
+  width: 255px;
+  height: 36px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 169px;
+  left: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v118_834 {
+  width: 137px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 173px;
+  left: 84px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_835 {
+  width: 255px;
+  height: 36px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 230px;
+  left: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v118_836 {
+  width: 215px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 234px;
+  left: 45px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_837 {
+  width: 255px;
+  height: 36px;
+  background: rgba(212,139,139,1);
+  opacity: 1;
+  position: absolute;
+  top: 290px;
+  left: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v118_838 {
+  width: 165px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 290px;
+  left: 70px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_839 {
+  width: 323px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 116px;
+  left: 378px;
+  font-family: Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_840 {
+  width: 100%;
+  height: 84px;
+  background: rgba(236,13,13,0.20000000298023224);
+  opacity: 1;
+  position: absolute;
+  top: 205px;
+  left: 378px;
+  overflow: hidden;
+}
+.v118_841 {
+  width: 34px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 231px;
+  left: 426px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_842 {
+  width: 90px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 213px;
+  left: 562px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_847 {
+  width: 100%;
+  height: 84px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 356px;
+  left: 378px;
+  overflow: hidden;
+}
+.v118_850 {
+  width: 134px;
+  height: 32px;
+  background: url("../images/v118_850.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 389px;
+  left: 774px;
+  overflow: hidden;
+}
+.v118_851 {
+  width: 149px;
+  color: rgba(99,99,99,1);
+  position: absolute;
+  top: 0px;
+  left: 8px;
+  font-family: Manrope;
+  font-weight: ExtraBold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: center;
+}
+.v118_1171 {
+  width: 325px;
+  color: rgba(99,99,99,1);
+  position: absolute;
+  top: 382px;
+  left: 450px;
+  font-family: Manrope;
+  font-weight: ExtraBold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: center;
+}
+.v118_852 {
+  width: 325px;
+  color: rgba(99,99,99,1);
+  position: absolute;
+  top: 382px;
+  left: 908px;
+  font-family: Manrope;
+  font-weight: ExtraBold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: center;
+}
+.v118_853 {
+  width: 325px;
+  color: rgba(99,99,99,1);
+  position: absolute;
+  top: 389px;
+  left: 1161px;
+  font-family: Manrope;
+  font-weight: ExtraBold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: center;
+}
+.v118_854 {
+  width: 325px;
+  color: rgba(99,99,99,1);
+  position: absolute;
+  top: 382px;
+  left: 1411px;
+  font-family: Manrope;
+  font-weight: ExtraBold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: center;
+}
+.v118_855 {
+  width: 325px;
+  color: rgba(99,99,99,1);
+  position: absolute;
+  top: 382px;
+  left: 1736px;
+  font-family: Manrope;
+  font-weight: ExtraBold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: center;
+}
+.v118_856 {
+  width: 325px;
+  color: rgba(99,99,99,1);
+  position: absolute;
+  top: 382px;
+  left: 1968px;
+  font-family: Manrope;
+  font-weight: ExtraBold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: center;
+}
+.v118_861 {
+  width: 583px;
+  height: 98px;
+  background: url("../images/v118_861.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 75px;
+  left: 1238px;
+  overflow: hidden;
+}
+.v118_866 {
+  width: 583px;
+  height: 32px;
+  background: url("../images/v118_866.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 84px;
+  left: 653px;
+  overflow: hidden;
+}
+.v118_870 {
+  width: 583px;
+  height: 70px;
+  background: url("../images/v118_870.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 77px;
+  left: 1136px;
+  overflow: hidden;
+}
+.v118_1159 {
+  width: 87px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 216px;
+  left: 797px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_1161 {
+  width: 76px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 231px;
+  left: 1041px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_1163 {
+  width: 78px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 229px;
+  left: 1274px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_1165 {
+  width: 98px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 213px;
+  left: 1530px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_1167 {
+  width: 131px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 232px;
+  left: 1822px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_1169 {
+  width: 82px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 229px;
+  left: 2131px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_1173 {
+  width: 325px;
+  color: rgba(99,99,99,1);
+  position: absolute;
+  top: 382px;
+  left: 282px;
+  font-family: Manrope;
+  font-weight: ExtraBold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: center;
+}

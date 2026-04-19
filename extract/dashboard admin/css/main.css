@@ -1,0 +1,1016 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 14px;
+}
+.v108_1088 {
+  width: 100%;
+  height: 2044px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.v108_1094 {
+  width: 335px;
+  height: 100%;
+  background: rgba(171,53,0,1);
+  opacity: 1;
+  position: absolute;
+  top: 81px;
+  left: 0px;
+  overflow: hidden;
+}
+.v108_1095 {
+  width: 255px;
+  height: 36px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 108px;
+  left: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v108_1096 {
+  width: 176px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 112px;
+  left: 65px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_118 {
+  width: 203px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 31px;
+  left: 77px;
+  font-family: Inter;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_120 {
+  width: 32px;
+  color: rgba(240,140,0,1);
+  position: absolute;
+  top: 23px;
+  left: 25px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 32px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_121 {
+  width: 351px;
+  height: 140px;
+  background: rgba(87,106,180,1);
+  opacity: 1;
+  position: absolute;
+  top: 108px;
+  left: 376px;
+  overflow: hidden;
+}
+.v112_122 {
+  width: 360px;
+  height: 140px;
+  background: rgba(55,152,98,1);
+  opacity: 1;
+  position: absolute;
+  top: 108px;
+  left: 768px;
+  overflow: hidden;
+}
+.v112_123 {
+  width: 351px;
+  height: 139px;
+  background: rgba(240,140,0,1);
+  opacity: 1;
+  position: absolute;
+  top: 274px;
+  left: 376px;
+  overflow: hidden;
+}
+.v112_124 {
+  width: 360px;
+  height: 135px;
+  background: rgba(69,32,121,1);
+  opacity: 1;
+  position: absolute;
+  top: 278px;
+  left: 768px;
+  overflow: hidden;
+}
+.v112_132 {
+  width: 176px;
+  color: rgba(255,243,243,1);
+  position: absolute;
+  top: 119px;
+  left: 404px;
+  font-family: ADLaM Display;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_133 {
+  width: 155px;
+  color: rgba(255,243,243,1);
+  position: absolute;
+  top: 119px;
+  left: 785px;
+  font-family: ADLaM Display;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_134 {
+  width: 145px;
+  color: rgba(255,243,243,1);
+  position: absolute;
+  top: 296px;
+  left: 404px;
+  font-family: ADLaM Display;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_135 {
+  width: 121px;
+  color: rgba(255,243,243,1);
+  position: absolute;
+  top: 296px;
+  left: 785px;
+  font-family: ADLaM Display;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_136 {
+  width: 293px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 161px;
+  left: 404px;
+  font-size: 48px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_137 {
+  width: 71px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 164px;
+  left: 785px;
+  font-family: Abhaya Libre ExtraBold;
+  font-weight: Regular;
+  font-size: 48px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_138 {
+  width: 26px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 338px;
+  left: 404px;
+  font-family: Abhaya Libre ExtraBold;
+  font-weight: Regular;
+  font-size: 48px;
+  opacity: 1;
+  text-align: left;
+}
+.v112_139 {
+  width: 98px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 338px;
+  left: 785px;
+  font-family: Abhaya Libre ExtraBold;
+  font-weight: Regular;
+  font-size: 48px;
+  opacity: 1;
+  text-align: left;
+}
+.v115_143 {
+  width: 255px;
+  height: 36px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 169px;
+  left: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v115_145 {
+  width: 137px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 173px;
+  left: 84px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v115_147 {
+  width: 255px;
+  height: 36px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 230px;
+  left: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v115_149 {
+  width: 215px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 234px;
+  left: 45px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v115_151 {
+  width: 255px;
+  height: 36px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 290px;
+  left: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v115_153 {
+  width: 165px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 290px;
+  left: 70px;
+  font-family: Times New Roman;
+  font-weight: Regular;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v115_155 {
+  width: 538px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 484px;
+  left: 376px;
+  font-family: Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v115_157 {
+  width: 100%;
+  height: 84px;
+  background: rgba(236,13,13,0.20000000298023224);
+  opacity: 1;
+  position: absolute;
+  top: 551px;
+  left: 382px;
+  overflow: hidden;
+}
+.v115_188 {
+  width: 100%;
+  height: 84px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 683px;
+  left: 382px;
+  overflow: hidden;
+}
+.v115_190 {
+  width: 100%;
+  height: 84px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 815px;
+  left: 382px;
+  overflow: hidden;
+}
+.v115_192 {
+  width: 100%;
+  height: 84px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 947px;
+  left: 382px;
+  overflow: hidden;
+}
+.v115_194 {
+  width: 100%;
+  height: 84px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 1088px;
+  left: 382px;
+  overflow: hidden;
+}
+.v115_196 {
+  width: 100%;
+  height: 84px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 1220px;
+  left: 382px;
+  overflow: hidden;
+}
+.v115_198 {
+  width: 100%;
+  height: 84px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 1361px;
+  left: 382px;
+  overflow: hidden;
+}
+.v115_200 {
+  width: 100%;
+  height: 84px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 1656px;
+  left: 376px;
+  overflow: hidden;
+}
+.v116_35 {
+  width: 100%;
+  height: 84px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 1505px;
+  left: 382px;
+  overflow: hidden;
+}
+.v118_37 {
+  width: 51px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 565px;
+  left: 430px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_39 {
+  width: 215px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 565px;
+  left: 601px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_41 {
+  width: 71px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 565px;
+  left: 1348px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_43 {
+  width: 95px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 565px;
+  left: 940px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_46 {
+  width: 112px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 565px;
+  left: 1150px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_48 {
+  width: 68px;
+  color: rgba(185,65,65,1);
+  position: absolute;
+  top: 565px;
+  left: 1534px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_50 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 700px;
+  left: 437px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_52 {
+  width: 130px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 700px;
+  left: 638px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_54 {
+  width: 155px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 700px;
+  left: 919px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_56 {
+  width: 74px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 700px;
+  left: 1163px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_58 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 700px;
+  left: 1365px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_60 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 837px;
+  left: 437px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_62 {
+  width: 186px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 837px;
+  left: 616px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_64 {
+  width: 164px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 837px;
+  left: 919px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_66 {
+  width: 74px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 837px;
+  left: 1163px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_68 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 837px;
+  left: 1365px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_136 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 969px;
+  left: 437px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_138 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1110px;
+  left: 437px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_140 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1244px;
+  left: 437px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_142 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1383px;
+  left: 437px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_144 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1522px;
+  left: 437px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_146 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1678px;
+  left: 437px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_148 {
+  width: 222px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 969px;
+  left: 601px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_150 {
+  width: 267px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1110px;
+  left: 578px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_152 {
+  width: 130px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1244px;
+  left: 635px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_154 {
+  width: 125px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1383px;
+  left: 640px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_156 {
+  width: 105px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1522px;
+  left: 650px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_158 {
+  width: 157px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1678px;
+  left: 633px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_160 {
+  width: 164px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 969px;
+  left: 919px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_162 {
+  width: 164px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1110px;
+  left: 920px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_164 {
+  width: 164px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1244px;
+  left: 919px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_166 {
+  width: 145px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1383px;
+  left: 920px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_168 {
+  width: 164px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1522px;
+  left: 911px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_170 {
+  width: 164px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1678px;
+  left: 911px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_172 {
+  width: 74px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 969px;
+  left: 1163px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_174 {
+  width: 74px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1110px;
+  left: 1163px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.name {
+  color: #fff;
+}
+.v118_538 {
+  width: 74px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1251px;
+  left: 1157px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_540 {
+  width: 56px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1380px;
+  left: 1166px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_542 {
+  width: 74px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1522px;
+  left: 1157px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_547 {
+  width: 74px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1678px;
+  left: 1157px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_549 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 969px;
+  left: 1365px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_551 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1110px;
+  left: 1365px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_553 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1244px;
+  left: 1365px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_555 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1380px;
+  left: 1365px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_557 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1522px;
+  left: 1365px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.v118_559 {
+  width: 38px;
+  color: rgba(115,95,95,1);
+  position: absolute;
+  top: 1678px;
+  left: 1365px;
+  font-family: Stardos Stencil;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: left;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.name {
+  color: #fff;
+}
+.v118_823 {
+  width: 447px;
+  height: 105px;
+  background: rgba(171,53,0,1);
+  opacity: 1;
+  position: absolute;
+  top: 1845px;
+  left: 1284px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v118_824 {
+  width: 374px;
+  color: rgba(255,243,243,1);
+  position: absolute;
+  top: 1872px;
+  left: 1322px;
+  font-family: ADLaM Display;
+  font-weight: Regular;
+  font-size: 32px;
+  opacity: 1;
+  text-align: left;
+}
+.name {
+  color: #fff;
+}
