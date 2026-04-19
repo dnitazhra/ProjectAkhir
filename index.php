@@ -183,33 +183,7 @@ if ($user) {
   </div>
 </div>
 
-<!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-brand">
-      <h3>Happy Snack</h3>
-      <p>Menyediakan berbagai snack enak dan kue kering berkualitas. Homemade, tanpa pengawet, freshly baked.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Menu</h4>
-      <ul>
-        <li><a href="index.php">Beranda</a></li>
-        <li><a href="kategori.php">Produk</a></li>
-        <li><a href="kategori.php?kategori=Snack+Kering">Snack Kering</a></li>
-        <li><a href="kategori.php?kategori=Kue+Kering">Kue Kering</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Kontak</h4>
-      <p><i class="fa fa-phone"></i> 0812-3456-7890</p>
-      <p><i class="fa fa-envelope"></i> happysnack@gmail.com</p>
-      <p><i class="fa fa-map-marker-alt"></i> Bandung, Jawa Barat</p>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 Happy Snack. All rights reserved.</p>
-  </div>
-</footer>
+<?php include 'includes/footer.php'; ?>
 
 <!-- ===== SCRIPT ===== -->
 <script>

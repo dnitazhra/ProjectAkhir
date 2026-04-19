@@ -546,14 +546,7 @@ $cart_count = count($keranjang);
   </form>
 </div>
 
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-brand"><h3>Happy Snack</h3><p>Snack homemade berkualitas.</p></div>
-    <div class="footer-col"><h4>Menu</h4><ul><li><a href="index.php">Beranda</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><p><i class="fa fa-phone"></i> 0812-3456-7890</p></div>
-  </div>
-  <div class="footer-bottom"><p>© 2026 Happy Snack. All rights reserved.</p></div>
-</footer>
+<?php include 'includes/footer.php'; ?>
 
 <script>
 const subtotal = <?= $subtotal ?>;
