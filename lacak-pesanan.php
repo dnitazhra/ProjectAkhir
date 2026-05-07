@@ -54,13 +54,14 @@ $steps = [
 
 $step_keys  = array_keys($steps);
 $step_aktif = array_search($pesanan['status'], $step_keys);
+if ($step_aktif === false) $step_aktif = 0;
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lacak Pesanan - Happy Snack</title>
+  <title>Lacak Pesanan - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -317,40 +318,7 @@ $step_aktif = array_search($pesanan['status'], $step_keys);
 </head>
 <body>
 
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <span class="sidebar-logo">Happy Snack</span>
-    <button class="sidebar-close" onclick="closeSidebar()"><i class="fa fa-times"></i></button>
-  </div>
-  <div class="sidebar-nav">
-    <a href="index.php"><i class="fa fa-home"></i> Beranda</a>
-    <a href="kategori.php"><i class="fa fa-th-large"></i> Kategori</a>
-    <a href="keranjang.php"><i class="fa fa-shopping-cart"></i> Keranjang</a>
-    <?php if ($user): ?>
-      <a href="profil.php"><i class="fa fa-user"></i> Profil</a>
-      <a href="logout.php"><i class="fa fa-sign-out-alt"></i> Keluar</a>
-    <?php else: ?>
-      <a href="login.php"><i class="fa fa-sign-in-alt"></i> Masuk</a>
-    <?php endif; ?>
-  </div>
-</nav>
-
-<header class="navbar">
-  <div class="navbar-logo">
-    <img src="logo.png/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
-  </div>
-  <form class="navbar-search" action="kategori.php" method="GET">
-    <button type="submit"><i class="fa fa-search"></i></button>
-    <input type="text" name="q" placeholder="Cari produk...">
-  </form>
-  <div class="navbar-actions">
-    <a href="<?= $user ? 'profil.php' : 'login.php' ?>" class="nav-btn"><i class="fa fa-user"></i></a>
-    <a href="keranjang.php" class="nav-btn"><i class="fa fa-shopping-cart"></i></a>
-    <button class="nav-btn btn-menu" onclick="openSidebar()"><i class="fa fa-bars"></i></button>
-  </div>
-</header>
+<?php include 'includes/navbar.php'; ?>
 
 <div class="lacak-page">
 
@@ -360,12 +328,36 @@ $step_aktif = array_search($pesanan['status'], $step_keys);
   <h1 class="lacak-page-title"><i class="fa fa-map-marker-alt"></i> Lacak Pesanan</h1>
 
   <!-- Status Card -->
+  <?php if ($pesanan['status'] === 'ditolak'): ?>
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius-md);padding:20px 24px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:48px;height:48px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <i class="fa fa-ban" style="color:#dc2626;font-size:20px;"></i>
+      </div>
+      <div>
+        <div style="font-size:16px;font-weight:700;color:#dc2626;">Pesanan Ditolak</div>
+        <div style="font-size:13px;color:#6b7280;margin-top:2px;">
+          Pesanan <strong><?= $pesanan['no'] ?></strong> telah ditolak oleh admin.
+          Kemungkinan karena bukti transfer tidak valid atau alasan lainnya.
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid #fecaca;">
+      <a href="index.php" style="background:#dc2626;color:white;padding:10px 20px;border-radius:9999px;font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <i class="fa fa-home"></i> Kembali ke Beranda
+      </a>
+      <a href="keranjang.php" style="margin-left:10px;background:white;color:#dc2626;border:1px solid #fecaca;padding:10px 20px;border-radius:9999px;font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <i class="fa fa-shopping-cart"></i> Pesan Ulang
+      </a>
+    </div>
+  </div>
+  <?php else: ?>
   <div class="status-card">
     <div class="status-card-top">
       <div>
         <div class="status-no">No. Pesanan: <?= $pesanan['no'] ?></div>
         <div class="status-label">
-          <?= $steps[$pesanan['status']]['label'] ?>
+          <?= $steps[$pesanan['status'] ?? 'pending']['label'] ?? 'Pending' ?>
         </div>
       </div>
       <div class="status-est">EST. <?= strtoupper($pesanan['est']) ?></div>
@@ -390,6 +382,7 @@ $step_aktif = array_search($pesanan['status'], $step_keys);
       <?php endforeach; ?>
     </div>
   </div>
+  <?php endif; ?>
 
   <!-- Item Pesanan -->
   <div class="info-card">
@@ -518,16 +511,6 @@ function pesananSelesai() {
   });
 }
 
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('active');
-  document.getElementById('sidebarOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('active');
-  document.getElementById('sidebarOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
 function showToast(msg) {
   const t = document.createElement('div');
   t.textContent = msg;

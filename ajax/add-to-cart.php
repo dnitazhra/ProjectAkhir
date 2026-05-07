@@ -43,14 +43,20 @@ $existing = mysqli_fetch_assoc($res2);
 mysqli_stmt_close($stmt2);
 
 if ($existing) {
-    // Update jumlah
+    // Cek total qty (yang di keranjang + yang ditambah) tidak melebihi stok
     $new_qty = $existing['jumlah'] + $jumlah;
+    if ($new_qty > $stok) {
+        echo json_encode([
+            'success' => false,
+            'message' => "Stok tidak mencukupi. Stok tersedia: $stok, sudah di keranjang: {$existing['jumlah']}"
+        ]);
+        exit;
+    }
     $stmt3 = mysqli_prepare($conn, "UPDATE keranjang SET jumlah = ? WHERE id_keranjang = ?");
     mysqli_stmt_bind_param($stmt3, 'ii', $new_qty, $existing['id_keranjang']);
     mysqli_stmt_execute($stmt3);
     mysqli_stmt_close($stmt3);
 } else {
-    // Insert baru
     $stmt4 = mysqli_prepare($conn,
         "INSERT INTO keranjang (id_user, id_produk, varian, jumlah) VALUES (?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt4, 'iisi', $id_user, $id_produk, $varian, $jumlah);

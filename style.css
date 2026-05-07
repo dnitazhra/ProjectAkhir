@@ -93,38 +93,54 @@ input, textarea, select { font-family: inherit; }
   letter-spacing: 0.5px;
 }
 
-.navbar-search {
-  flex: 1;
-  max-width: 480px;
+.navbar-search { display: none; }
+
+/* ---- Navbar Nav Links ---- */
+.navbar-nav {
   display: flex;
   align-items: center;
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  padding: 0 16px;
-  gap: 8px;
-}
-
-.navbar-search input {
+  gap: 4px;
   flex: 1;
-  border: none;
-  background: transparent;
-  padding: 10px 0;
+  justify-content: center;
+}
+
+.navbar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
   font-size: 14px;
-  outline: none;
+  font-weight: 600;
   color: var(--text-dark);
+  text-decoration: none;
+  transition: all var(--transition);
+  white-space: nowrap;
 }
 
-.navbar-search input::placeholder { color: var(--text-muted); }
-
-.navbar-search button {
-  color: var(--text-muted);
-  font-size: 16px;
-  padding: 4px;
-  transition: color var(--transition);
+.navbar-nav a:hover {
+  background: var(--bg-light);
+  color: var(--primary);
 }
 
-.navbar-search button:hover { color: var(--primary); }
+.navbar-nav a.active {
+  background: #fff5f0;
+  color: var(--primary);
+}
+
+.navbar-nav a i {
+  font-size: 14px;
+}
+
+.navbar-nav .nav-badge {
+  background: var(--primary);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  margin-left: 2px;
+}
 
 .navbar-actions {
   display: flex;
@@ -960,7 +976,7 @@ input, textarea, select { font-family: inherit; }
    RESPONSIVE
    ============================================= */
 @media (max-width: 768px) {
-  .navbar-search { display: none; }
+  .navbar-nav { display: none; }
   .btn-menu { display: flex; }
 
   .hero h1 { font-size: 26px; }
@@ -1021,3 +1037,93 @@ input, textarea, select { font-family: inherit; }
 }
 
 .btn-back i { font-size: 13px; }
+
+/* =============================================
+   LOGIN PROMPT MODAL
+   ============================================= */
+.login-prompt-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9998;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-prompt-overlay.active { display: flex; }
+
+.login-prompt-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.login-prompt-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #fff5f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.login-prompt-icon i { font-size: 28px; color: var(--primary); }
+
+.login-prompt-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.login-prompt-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.login-prompt-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-login-now {
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background var(--transition);
+}
+
+.btn-login-now:hover { background: var(--primary-dark); }
+
+.btn-cancel-prompt {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-cancel-prompt:hover { border-color: var(--primary); color: var(--primary); }

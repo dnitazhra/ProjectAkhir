@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['kirim'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tulis Ulasan - Happy Snack</title>
+  <title>Tulis Ulasan - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -263,35 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['kirim'])) {
 </head>
 <body>
 
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <span class="sidebar-logo">Happy Snack</span>
-    <button class="sidebar-close" onclick="closeSidebar()"><i class="fa fa-times"></i></button>
-  </div>
-  <div class="sidebar-nav">
-    <a href="index.php"><i class="fa fa-home"></i> Beranda</a>
-    <a href="kategori.php"><i class="fa fa-th-large"></i> Kategori</a>
-    <a href="profil.php"><i class="fa fa-user"></i> Profil</a>
-    <a href="logout.php"><i class="fa fa-sign-out-alt"></i> Keluar</a>
-  </div>
-</nav>
-
-<header class="navbar">
-  <div class="navbar-logo">
-    <img src="logo.png/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
-  </div>
-  <div class="navbar-search" style="pointer-events:none;opacity:0.5;">
-    <i class="fa fa-search" style="color:var(--text-muted)"></i>
-    <input type="text" placeholder="Cari produk..." disabled>
-  </div>
-  <div class="navbar-actions">
-    <a href="profil.php" class="nav-btn"><i class="fa fa-user"></i></a>
-    <a href="keranjang.php" class="nav-btn"><i class="fa fa-shopping-cart"></i></a>
-    <button class="nav-btn btn-menu" onclick="openSidebar()"><i class="fa fa-bars"></i></button>
-  </div>
-</header>
+<?php include 'includes/navbar.php'; ?>
 
 <div class="ulasan-page">
 
@@ -403,16 +375,7 @@ function validasiUlasan() {
   return true;
 }
 
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('active');
-  document.getElementById('sidebarOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('active');
-  document.getElementById('sidebarOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
+
 </script>
 </body>
 </html>

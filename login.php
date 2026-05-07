@@ -43,7 +43,7 @@ if (isset($_POST['login'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Masuk - Happy Snack</title>
+  <title>Masuk - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -54,7 +54,7 @@ if (isset($_POST['login'])) {
 
     <!-- Logo -->
     <div class="auth-logo">
-      <h2>Happy Snack</h2>
+      <h2>lavo.id</h2>
     </div>
 
     <!-- Header -->

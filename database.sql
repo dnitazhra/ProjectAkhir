@@ -1,5 +1,7 @@
-
-
+-- ============================================
+-- Happy Snack - Database Setup
+-- Import file ini ke phpMyAdmin
+-- ============================================
 
 CREATE DATABASE IF NOT EXISTS `happy_snack`
   CHARACTER SET utf8mb4
@@ -7,27 +9,19 @@ CREATE DATABASE IF NOT EXISTS `happy_snack`
 
 USE `happy_snack`;
 
-
-
-
-CREATE TABLE `user` (
-  `id_user`    INT(11)      NOT NULL AUTO_INCREMENT,
-  `nama`       VARCHAR(100) NOT NULL,
-  `email`      VARCHAR(100) NOT NULL UNIQUE,
-  `password`   VARCHAR(255) NOT NULL,
-  `telepon`    VARCHAR(20)  DEFAULT NULL,
-  `role`       ENUM('pembeli','admin') NOT NULL DEFAULT 'pembeli',
-  `created_at` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE `kategori` (
+-- ============================================
+-- Tabel kategori
+-- ============================================
+CREATE TABLE IF NOT EXISTS `kategori` (
   `id_kategori` INT(11)      NOT NULL AUTO_INCREMENT,
   `nama`        VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id_kategori`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `produk` (
+-- ============================================
+-- Tabel produk
+-- ============================================
+CREATE TABLE IF NOT EXISTS `produk` (
   `id_produk`   INT(11)        NOT NULL AUTO_INCREMENT,
   `id_kategori` INT(11)        NOT NULL,
   `nama`        VARCHAR(150)   NOT NULL,
@@ -41,15 +35,24 @@ CREATE TABLE `produk` (
   FOREIGN KEY (`id_kategori`) REFERENCES `kategori`(`id_kategori`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `varian_produk` (
-  `id_varian`  INT(11)      NOT NULL AUTO_INCREMENT,
-  `id_produk`  INT(11)      NOT NULL,
+-- ============================================
+-- Tabel user
+-- ============================================
+CREATE TABLE IF NOT EXISTS `user` (
+  `id_user`    INT(11)      NOT NULL AUTO_INCREMENT,
   `nama`       VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id_varian`),
-  FOREIGN KEY (`id_produk`) REFERENCES `produk`(`id_produk`) ON DELETE CASCADE
+  `email`      VARCHAR(100) NOT NULL UNIQUE,
+  `password`   VARCHAR(255) NOT NULL,
+  `telepon`    VARCHAR(20)  DEFAULT NULL,
+  `role`       ENUM('pembeli','admin') NOT NULL DEFAULT 'pembeli',
+  `created_at` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `pesanan` (
+-- ============================================
+-- Tabel pesanan
+-- ============================================
+CREATE TABLE IF NOT EXISTS `pesanan` (
   `id_pesanan`  INT(11)       NOT NULL AUTO_INCREMENT,
   `id_user`     INT(11)       NOT NULL,
   `kode`        VARCHAR(20)   NOT NULL UNIQUE,
@@ -70,7 +73,10 @@ CREATE TABLE `pesanan` (
   FOREIGN KEY (`id_user`) REFERENCES `user`(`id_user`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `detail_pesanan` (
+-- ============================================
+-- Tabel detail_pesanan
+-- ============================================
+CREATE TABLE IF NOT EXISTS `detail_pesanan` (
   `id_detail`  INT(11)       NOT NULL AUTO_INCREMENT,
   `id_pesanan` INT(11)       NOT NULL,
   `id_produk`  INT(11)       NOT NULL,
@@ -84,7 +90,10 @@ CREATE TABLE `detail_pesanan` (
   FOREIGN KEY (`id_produk`)  REFERENCES `produk`(`id_produk`)  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `keranjang` (
+-- ============================================
+-- Tabel keranjang
+-- ============================================
+CREATE TABLE IF NOT EXISTS `keranjang` (
   `id_keranjang` INT(11)      NOT NULL AUTO_INCREMENT,
   `id_user`      INT(11)      NOT NULL,
   `id_produk`    INT(11)      NOT NULL,
@@ -97,160 +106,51 @@ CREATE TABLE `keranjang` (
   FOREIGN KEY (`id_produk`) REFERENCES `produk`(`id_produk`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `ulasan` (
-  `id_ulasan`  INT(11)  NOT NULL AUTO_INCREMENT,
-  `id_user`    INT(11)  NOT NULL,
-  `id_produk`  INT(11)  NOT NULL,
-  `id_pesanan` INT(11)  DEFAULT NULL,
-  `rating`     TINYINT  NOT NULL DEFAULT 5,
-  `komentar`   TEXT     DEFAULT NULL,
+-- ============================================
+-- Tabel varian_produk
+-- ============================================
+CREATE TABLE IF NOT EXISTS `varian_produk` (
+  `id_varian`  INT(11)      NOT NULL AUTO_INCREMENT,
+  `id_produk`  INT(11)      NOT NULL,
+  `nama`       VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id_varian`),
+  FOREIGN KEY (`id_produk`) REFERENCES `produk`(`id_produk`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ============================================
+-- Tabel ulasan
+-- ============================================
+CREATE TABLE IF NOT EXISTS `ulasan` (
+  `id_ulasan`  INT(11)      NOT NULL AUTO_INCREMENT,
+  `id_user`    INT(11)      NOT NULL,
+  `id_produk`  INT(11)      NOT NULL,
+  `id_pesanan` INT(11)      DEFAULT NULL,
+  `rating`     TINYINT      NOT NULL DEFAULT 5,
+  `komentar`   TEXT         DEFAULT NULL,
   `foto`       VARCHAR(255) DEFAULT NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_ulasan`),
   FOREIGN KEY (`id_user`)    REFERENCES `user`(`id_user`)       ON DELETE CASCADE,
   FOREIGN KEY (`id_produk`)  REFERENCES `produk`(`id_produk`)   ON DELETE CASCADE,
   FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan`(`id_pesanan`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `voucher` (
-  `id_voucher` INT(11)       NOT NULL AUTO_INCREMENT,
-  `kode`       VARCHAR(50)   NOT NULL UNIQUE,
-  `diskon`     DECIMAL(10,2) NOT NULL DEFAULT 0,
-  `min_belanja`DECIMAL(12,2) NOT NULL DEFAULT 0,
-  `aktif`      TINYINT(1)    NOT NULL DEFAULT 1,
-  `expired_at` DATE          DEFAULT NULL,
+-- ============================================
+-- Tabel voucher
+-- ============================================
+CREATE TABLE IF NOT EXISTS `voucher` (
+  `id_voucher`  INT(11)       NOT NULL AUTO_INCREMENT,
+  `kode`        VARCHAR(50)   NOT NULL UNIQUE,
+  `diskon`      DECIMAL(10,2) NOT NULL DEFAULT 0,
+  `min_belanja` DECIMAL(12,2) NOT NULL DEFAULT 0,
+  `aktif`       TINYINT(1)    NOT NULL DEFAULT 1,
+  `expired_at`  DATE          DEFAULT NULL,
   PRIMARY KEY (`id_voucher`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ============================================
 -- Tabel pembayaran
 -- ============================================
-CREATE TABLE `pembayaran` (
-  `id_pembayaran`  INT(11)       NOT NULL AUTO_INCREMENT,
-  `id_pesanan`     INT(11)       NOT NULL,
-  `metode`         ENUM('transfer_bank','cod','e_wallet') NOT NULL DEFAULT 'transfer_bank',
-  `bank`           VARCHAR(50)   DEFAULT NULL,
-  `no_rekening`    VARCHAR(50)   DEFAULT NULL,
-  `nama_pengirim`  VARCHAR(100)  DEFAULT NULL,
-  `jumlah_bayar`   DECIMAL(12,2) NOT NULL DEFAULT 0,
-  `bukti_transfer` VARCHAR(255)  DEFAULT NULL,
-  `status`         ENUM('menunggu','terverifikasi','ditolak') NOT NULL DEFAULT 'menunggu',
-  `catatan`        TEXT          DEFAULT NULL,
-  `created_at`     TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `verified_at`    TIMESTAMP     NULL DEFAULT NULL,
-  PRIMARY KEY (`id_pembayaran`),
-  UNIQUE KEY `uk_pesanan` (`id_pesanan`),
-  FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan`(`id_pesanan`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-INSERT INTO `kategori` (`nama`) VALUES
-  ('Snack Kering'),
-  ('Kue Kering');
-
-INSERT INTO `user` (`nama`, `email`, `password`, `telepon`, `role`) VALUES
-  ('Admin', 'admin@happysnack.com',
-   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-   '08123456789', 'admin');
-
-INSERT INTO `produk` (`id_kategori`, `nama`, `harga`, `satuan`, `stok`, `deskripsi`) VALUES
-  (1, 'Basreng',         15000, '250g', 50, 'Basreng (Baso Goreng) renyah dengan bumbu pedas khas. Homemade tanpa pengawet.'),
-  (1, 'Kripik Kaca',     10000, '250g', 50, 'Kripik Kaca tipis dan super renyah. Tanpa pengawet.'),
-  (1, 'Seblak Kering',   15000, '250g', 50, 'Seblak Kering dengan cita rasa khas Bandung. Pedas gurih.'),
-  (1, 'Makaroni Kering',  7000, '250g', 50, 'Makaroni Kering renyah dan gurih. Cocok untuk camilan.'),
-  (2, 'Brownis',         20000, '250g', 50, 'Brownis lembut dengan coklat premium. Freshly baked, tanpa pengawet.'),
-  (2, 'Cookies',          5000, 'pcs',  50, 'Soft Cookies tekstur lembut dan chewy. Freshly Baked, baru dipanggang ketika ada pesanan masuk.'),
-  (2, 'Kastengel',       35000, '250g', 50, 'Kastengel keju premium, renyah dan gurih.'),
-  (2, 'Nastar',          35000, '250g', 50, 'Nastar dengan selai nanas asli, lembut dan harum.');
-
-INSERT INTO `varian_produk` (`id_produk`, `nama`) VALUES
-  (1, 'Original'), (1, 'Pedas'), (1, 'Pedas Daun Jeruk'),
-  (2, 'Original'), (2, 'Balado'), (2, 'Keju'),
-  (3, 'Level 1'),  (3, 'Level 2'), (3, 'Level 3'),
-  (4, 'Original'), (4, 'Pedas'),  (4, 'BBQ'),
-  (5, 'Dark Chocolate'), (5, 'Milk Chocolate'), (5, 'Matcha'),
-  (6, 'Matcha'), (6, 'Chocolate'), (6, 'Redvelvet'),
-  (7, 'Original'), (7, 'Extra Keju'),
-  (8, 'Original');
-
-INSERT INTO `voucher` (`kode`, `diskon`, `min_belanja`, `aktif`, `expired_at`) VALUES
-  ('HAPPYSNACK', 5000,  20000, 1, '2026-12-31'),
-  ('NEWUSER',    10000, 30000, 1, '2026-06-30'),
-  ('GRATIS',     15000, 50000, 1, '2026-03-31');
-
-SELECT p.id_produk, p.nama, k.nama AS kategori, p.harga, p.satuan, p.stok
-FROM produk p
-JOIN kategori k ON p.id_kategori = k.id_kategori
-ORDER BY k.id_kategori, p.nama;
-
-SELECT ps.kode, u.nama AS pembeli, ps.total, ps.status, ps.created_at
-FROM pesanan ps
-JOIN user u ON ps.id_user = u.id_user
-ORDER BY ps.created_at DESC;
-
-SELECT
-  COUNT(*) AS total_pesanan,
-  SUM(total) AS total_penjualan
-FROM pesanan
-WHERE status = 'selesai';
-
-SELECT p.nama, ROUND(AVG(u.rating), 1) AS rating, COUNT(u.id_ulasan) AS jumlah_ulasan
-FROM produk p
-LEFT JOIN ulasan u ON p.id_produk = u.id_produk
-GROUP BY p.id_produk
-ORDER BY rating DESC;
-
-SELECT k.id_keranjang, p.nama, k.varian, k.jumlah, p.harga,
-       (k.jumlah * p.harga) AS subtotal
-FROM keranjang k
-JOIN produk p ON k.id_produk = p.id_produk
-WHERE k.id_user = 1;
-
-
----
-
-## 15. Update Database (Jika Sudah Ada)
-
-Jika database sudah dibuat sebelumnya, jalankan query ini untuk menambahkan status `ditolak`:
-
-```sql
-ALTER TABLE `pesanan`
-  MODIFY `status` ENUM('pending','diproses','dikemas','dikirim','selesai','ditolak')
-  NOT NULL DEFAULT 'pending';
-```
-
-
-## 16. Fix Pesanan dengan Status Kosong
-
-Jika ada pesanan dengan status kosong/null, jalankan:
-
-```sql
-UPDATE `pesanan` SET `status` = 'pending' WHERE `status` = '' OR `status` IS NULL;
-```
-
-
-## 17. Fix Kategori Duplikat
-
-Jika kategori muncul duplikat di sidebar, jalankan query ini di phpMyAdmin:
-
-```sql
--- Lihat kategori yang ada
-SELECT * FROM kategori;
-
--- Hapus duplikat (simpan id terkecil)
-DELETE k1 FROM kategori k1
-INNER JOIN kategori k2
-WHERE k1.id_kategori > k2.id_kategori AND k1.nama = k2.nama;
-
--- Update produk yang id_kategori-nya mengarah ke id yang sudah dihapus
--- (jalankan setelah cek hasil SELECT di atas)
-```
-
-
-## 18. Tambah Tabel Pembayaran (Jika Database Sudah Ada)
-
-Jika database sudah dibuat sebelumnya, jalankan query ini di phpMyAdmin untuk menambahkan tabel pembayaran:
-
-```sql
 CREATE TABLE IF NOT EXISTS `pembayaran` (
   `id_pembayaran`  INT(11)       NOT NULL AUTO_INCREMENT,
   `id_pesanan`     INT(11)       NOT NULL,
@@ -268,13 +168,10 @@ CREATE TABLE IF NOT EXISTS `pembayaran` (
   UNIQUE KEY `uk_pesanan` (`id_pesanan`),
   FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan`(`id_pesanan`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-```
 
-## 19. Tambah Tabel Chat (Jika Database Sudah Ada)
-
-Jalankan query ini di phpMyAdmin untuk fitur live chat:
-
-```sql
+-- ============================================
+-- Tabel chat_messages (Live Chat)
+-- ============================================
 CREATE TABLE IF NOT EXISTS `chat_messages` (
   `id`         INT(11)      NOT NULL AUTO_INCREMENT,
   `id_user`    INT(11)      NOT NULL,
@@ -285,4 +182,53 @@ CREATE TABLE IF NOT EXISTS `chat_messages` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`id_user`) REFERENCES `user`(`id_user`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-```
+
+-- ============================================
+-- Data Awal: Kategori
+-- ============================================
+INSERT INTO `kategori` (`nama`) VALUES
+  ('Snack Kering'),
+  ('Kue Kering');
+
+-- ============================================
+-- Data Awal: Admin
+-- Password: admin123
+-- ============================================
+INSERT INTO `user` (`nama`, `email`, `password`, `telepon`, `role`) VALUES
+  ('Admin', 'admin@happysnack.com',
+   '$2y$10$TKh8H1.PfunDStrTRBi0OeGHBHFBHBHFBHBHFBHBHFBHBHFBHBHFB',
+   '08123456789', 'admin');
+
+-- ============================================
+-- Data Awal: Produk
+-- ============================================
+INSERT INTO `produk` (`id_kategori`, `nama`, `harga`, `satuan`, `stok`, `deskripsi`) VALUES
+  (1, 'Basreng',         15000, '250g', 50, 'Basreng (Baso Goreng) renyah dengan bumbu pedas khas. Homemade tanpa pengawet.'),
+  (1, 'Kripik Kaca',     10000, '250g', 50, 'Kripik Kaca tipis dan super renyah. Tanpa pengawet.'),
+  (1, 'Seblak Kering',   15000, '250g', 50, 'Seblak Kering dengan cita rasa khas Bandung. Pedas gurih.'),
+  (1, 'Makaroni Kering',  7000, '250g', 50, 'Makaroni Kering renyah dan gurih. Cocok untuk camilan.'),
+  (2, 'Brownis',         20000, '250g', 50, 'Brownis lembut dengan coklat premium. Freshly baked, tanpa pengawet.'),
+  (2, 'Cookies',          5000, 'pcs',  50, 'Soft Cookies tekstur lembut dan chewy. Freshly Baked setiap hari.'),
+  (2, 'Kastengel',       35000, '250g', 50, 'Kastengel keju premium, renyah dan gurih.'),
+  (2, 'Nastar',          35000, '250g', 50, 'Nastar dengan selai nanas asli, lembut dan harum.');
+
+-- ============================================
+-- Data Awal: Varian Produk
+-- ============================================
+INSERT INTO `varian_produk` (`id_produk`, `nama`) VALUES
+  (1, 'Original'), (1, 'Pedas'), (1, 'Pedas Daun Jeruk'),
+  (2, 'Original'), (2, 'Balado'), (2, 'Keju'),
+  (3, 'Level 1'),  (3, 'Level 2'), (3, 'Level 3'),
+  (4, 'Original'), (4, 'Pedas'),  (4, 'BBQ'),
+  (5, 'Dark Chocolate'), (5, 'Milk Chocolate'), (5, 'Matcha'),
+  (6, 'Matcha'), (6, 'Chocolate'), (6, 'Redvelvet'),
+  (7, 'Original'), (7, 'Extra Keju'),
+  (8, 'Original');
+
+-- ============================================
+-- Data Awal: Voucher
+-- ============================================
+INSERT INTO `voucher` (`kode`, `diskon`, `min_belanja`, `aktif`, `expired_at`) VALUES
+  ('HAPPYSNACK', 5000,  20000, 1, '2026-12-31'),
+  ('NEWUSER',    10000, 30000, 1, '2026-12-31'),
+  ('GRATIS',     15000, 50000, 1, '2026-12-31');

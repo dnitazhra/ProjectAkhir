@@ -21,6 +21,25 @@ if ($jumlah < 1) {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 } else {
+    // Cek stok produk sebelum update
+    $sc = mysqli_prepare($conn,
+        "SELECT p.stok FROM keranjang k JOIN produk p ON k.id_produk = p.id_produk
+         WHERE k.id_keranjang = ? AND k.id_user = ?");
+    mysqli_stmt_bind_param($sc, 'ii', $id_keranjang, $id_user);
+    mysqli_stmt_execute($sc);
+    mysqli_stmt_bind_result($sc, $stok);
+    mysqli_stmt_fetch($sc);
+    mysqli_stmt_close($sc);
+
+    if ($jumlah > $stok) {
+        echo json_encode([
+            'success' => false,
+            'message' => "Stok tidak mencukupi. Maksimal: $stok",
+            'max_qty' => $stok
+        ]);
+        exit;
+    }
+
     $stmt = mysqli_prepare($conn,
         "UPDATE keranjang SET jumlah = ? WHERE id_keranjang = ? AND id_user = ?");
     mysqli_stmt_bind_param($stmt, 'iii', $jumlah, $id_keranjang, $id_user);

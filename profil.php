@@ -24,6 +24,7 @@ $status_label = [
     'dikemas'  => ['label'=>'Dikemas',   'color'=>'#8b5cf6'],
     'dikirim'  => ['label'=>'Dikirim',   'color'=>'#06b6d4'],
     'selesai'  => ['label'=>'Selesai',   'color'=>'#22c55e'],
+    'ditolak'  => ['label'=>'Ditolak',   'color'=>'#ef4444'],
 ];
 ?>
 <!DOCTYPE html>
@@ -31,7 +32,7 @@ $status_label = [
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profil - Happy Snack</title>
+  <title>Profil - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -286,36 +287,7 @@ $status_label = [
 </head>
 <body>
 
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <span class="sidebar-logo">Happy Snack</span>
-    <button class="sidebar-close" onclick="closeSidebar()"><i class="fa fa-times"></i></button>
-  </div>
-  <div class="sidebar-nav">
-    <a href="index.php"><i class="fa fa-home"></i> Beranda</a>
-    <a href="kategori.php"><i class="fa fa-th-large"></i> Kategori</a>
-    <a href="keranjang.php"><i class="fa fa-shopping-cart"></i> Keranjang</a>
-    <a href="profil.php" class="active"><i class="fa fa-user"></i> Profil</a>
-    <a href="logout.php"><i class="fa fa-sign-out-alt"></i> Keluar</a>
-  </div>
-</nav>
-
-<header class="navbar">
-  <div class="navbar-logo">
-    <img src="logo.png/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
-  </div>
-  <form class="navbar-search" action="kategori.php" method="GET">
-    <button type="submit"><i class="fa fa-search"></i></button>
-    <input type="text" name="q" placeholder="Cari produk...">
-  </form>
-  <div class="navbar-actions">
-    <a href="profil.php" class="nav-btn"><i class="fa fa-user"></i></a>
-    <a href="keranjang.php" class="nav-btn"><i class="fa fa-shopping-cart"></i></a>
-    <button class="nav-btn btn-menu" onclick="openSidebar()"><i class="fa fa-bars"></i></button>
-  </div>
-</header>
+<?php include 'includes/navbar.php'; ?>
 
 <div style="max-width:1100px;margin:16px auto 0;padding:0 24px;">
   <a href="index.php" class="btn-back">
@@ -343,6 +315,10 @@ $status_label = [
         </a>
         <a href="#" class="profil-menu-item" onclick="showTab('riwayat'); return false;">
           <span class="left"><i class="fa fa-history"></i> Riwayat Belanja</span>
+          <i class="fa fa-chevron-right" style="font-size:11px;color:var(--text-muted)"></i>
+        </a>
+        <a href="ulasan-saya.php" class="profil-menu-item">
+          <span class="left"><i class="fa fa-star"></i> Ulasan Saya</span>
           <i class="fa fa-chevron-right" style="font-size:11px;color:var(--text-muted)"></i>
         </a>
 
@@ -400,6 +376,18 @@ $status_label = [
       <div class="main-card-header">
         <h3><i class="fa fa-box"></i> Daftar Pesanan</h3>
       </div>
+      <?php
+      $ada_ditolak = array_filter($pesanan_list, fn($p) => $p['status'] === 'ditolak');
+      if ($ada_ditolak):
+      ?>
+      <div style="background:#fef2f2;border-bottom:1px solid #fecaca;padding:12px 20px;display:flex;align-items:center;gap:10px;">
+        <i class="fa fa-exclamation-circle" style="color:#dc2626;font-size:16px;flex-shrink:0;"></i>
+        <div style="font-size:13px;color:#dc2626;">
+          <strong>Perhatian:</strong> Ada <?= count($ada_ditolak) ?> pesanan yang ditolak oleh admin.
+          Silakan cek detail pesanan untuk informasi lebih lanjut.
+        </div>
+      </div>
+      <?php endif; ?>
       <div class="main-card-body" style="padding:0; overflow-x:auto;">
         <table class="pesanan-table">
           <thead>
@@ -414,20 +402,40 @@ $status_label = [
           </thead>
           <tbody>
             <?php foreach ($pesanan_list as $p):
-              $st = $status_label[$p['status']] ?? ['label'=>ucfirst($p['status']),'color'=>'#6b7280'];
+              $st       = $status_label[$p['status']] ?? ['label'=>ucfirst($p['status']),'color'=>'#6b7280'];
+              $ditolak  = $p['status'] === 'ditolak';
             ?>
-            <tr>
-              <td style="font-family:monospace; font-weight:700; color:var(--primary);"><?= htmlspecialchars($p['kode']) ?></td>
-              <td style="color:var(--text-muted);">—</td>
+            <tr style="<?= $ditolak ? 'background:#fff5f5;' : '' ?>">
+              <td style="font-family:monospace; font-weight:700; color:<?= $ditolak ? '#dc2626' : 'var(--primary)' ?>;">
+                <?= htmlspecialchars($p['kode']) ?>
+              </td>
+              <td style="color:var(--text-muted);">
+                <?php
+                $detail_p = getDetailPesanan($conn, $p['id_pesanan']);
+                $nama_produk = array_column($detail_p, 'nama');
+                echo htmlspecialchars(implode(', ', array_slice($nama_produk, 0, 2)));
+                if (count($nama_produk) > 2) echo ' +' . (count($nama_produk)-2) . ' lagi';
+                if (empty($nama_produk)) echo '—';
+                ?>
+              </td>
               <td><?= date('d M Y', strtotime($p['created_at'])) ?></td>
               <td style="font-weight:700; color:var(--text-red);">Rp <?= number_format($p['total'], 0, ',', '.') ?></td>
               <td>
                 <span class="status-badge" style="background:<?= $st['color'] ?>;">
-                  <?= $st['label'] ?>
+                  <?= $ditolak ? '🚫 ' : '' ?><?= $st['label'] ?>
                 </span>
+                <?php if ($ditolak): ?>
+                <div style="font-size:11px;color:#dc2626;margin-top:4px;">
+                  Pesanan ditolak oleh admin
+                </div>
+                <?php endif; ?>
               </td>
               <td>
-                <a href="lacak-pesanan.php?kode=<?= urlencode($p['kode']) ?>" class="btn-detail">Detail</a>
+                <a href="lacak-pesanan.php?kode=<?= urlencode($p['kode']) ?>"
+                   class="btn-detail"
+                   style="<?= $ditolak ? 'background:#fee2e2;color:#dc2626;border-color:#fecaca;' : '' ?>">
+                  <?= $ditolak ? '<i class="fa fa-info-circle"></i> Lihat' : 'Detail' ?>
+                </a>
               </td>
             </tr>
             <?php endforeach; ?>
@@ -593,16 +601,7 @@ function togglePassword(id, icon) {
   else { input.type = 'password'; i.className = 'fa fa-eye-slash'; }
 }
 
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('active');
-  document.getElementById('sidebarOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('active');
-  document.getElementById('sidebarOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
+
 </script>
 </body>
 </html>

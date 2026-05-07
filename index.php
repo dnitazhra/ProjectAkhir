@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'includes/functions.php';
 
 $user = $_SESSION['user'] ?? null;
 
@@ -34,79 +35,19 @@ if ($user) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Snack - Toko Snack Online</title>
+  <title>lavo.id - Toko Snack Online</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-<!-- ===== SIDEBAR OVERLAY ===== -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-<!-- ===== SIDEBAR ===== -->
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <span class="sidebar-logo">Happy Snack</span>
-    <button class="sidebar-close" onclick="closeSidebar()">
-      <i class="fa fa-times"></i>
-    </button>
-  </div>
-  <div class="sidebar-nav">
-    <a href="index.php" class="active"><i class="fa fa-home"></i> Beranda</a>
-    <a href="kategori.php"><i class="fa fa-th-large"></i> Kategori</a>
-    <a href="keranjang.php"><i class="fa fa-shopping-cart"></i> Keranjang</a>
-    <?php if ($user): ?>
-      <a href="profil.php"><i class="fa fa-user"></i> Profil</a>
-      <a href="lacak-pesanan.php"><i class="fa fa-box"></i> Pesanan Saya</a>
-      <a href="logout.php"><i class="fa fa-sign-out-alt"></i> Keluar</a>
-    <?php else: ?>
-      <a href="login.php"><i class="fa fa-sign-in-alt"></i> Masuk</a>
-      <a href="register.php"><i class="fa fa-user-plus"></i> Daftar</a>
-    <?php endif; ?>
-  </div>
-</nav>
-
-<!-- ===== NAVBAR ===== -->
-<header class="navbar">
-  <div class="navbar-logo">
-    <img src="logo.png/logo.png" alt="Happy Snack Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
-  </div>
-
-  <div class="navbar-search">
-    <button type="button"><i class="fa fa-search"></i></button>
-    <input type="text" placeholder="Cari snack favoritmu...">
-  </div>
-
-  <div class="navbar-actions">
-    <?php if ($user): ?>
-      <a href="profil.php" class="nav-btn" title="Profil">
-        <i class="fa fa-user"></i>
-      </a>
-    <?php else: ?>
-      <a href="login.php" class="nav-btn" title="Masuk">
-        <i class="fa fa-user"></i>
-      </a>
-    <?php endif; ?>
-
-    <a href="keranjang.php" class="nav-btn" title="Keranjang">
-      <i class="fa fa-shopping-cart"></i>
-      <?php if ($cart_count > 0): ?>
-        <span class="badge"><?= $cart_count ?></span>
-      <?php endif; ?>
-    </a>
-
-    <button class="nav-btn btn-menu" onclick="openSidebar()" title="Menu">
-      <i class="fa fa-bars"></i>
-    </button>
-  </div>
-</header>
+<?php include 'includes/navbar.php'; ?>
 
 <!-- ===== HERO ===== -->
 <section class="hero">
   <div class="hero-content">
     <span class="hero-badge">🍪 Snack Homemade Terbaik</span>
-    <h1>Toko Spesial<br>Snack Happy Snack</h1>
+    <h1>Toko Spesial<br>Snack lavo.id</h1>
     <p>Temukan berbagai snack enak, kue kering, dan camilan berkualitas</p>
     <form class="hero-search" action="kategori.php" method="GET">
       <input type="text" name="q" placeholder="Cari snack favoritmu...">
@@ -187,18 +128,6 @@ if ($user) {
 
 <!-- ===== SCRIPT ===== -->
 <script>
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('active');
-  document.getElementById('sidebarOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('active');
-  document.getElementById('sidebarOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
 function addToCart(e, id) {
   e.preventDefault();
   e.stopPropagation();

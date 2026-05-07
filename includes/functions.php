@@ -1,6 +1,6 @@
 <?php
 /**
- * Helper functions — Happy Snack
+ * Helper functions — lavo.id
  */
 
 // ── Produk ──────────────────────────────────────────────
@@ -312,7 +312,7 @@ function getAllUserAdmin($conn) {
          FROM user u
          LEFT JOIN pesanan p ON u.id_user = p.id_user
          GROUP BY u.id_user
-         ORDER BY u.created_at DESC");
+         ORDER BY u.created_at ASC");
     $data = [];
     while ($row = mysqli_fetch_assoc($res)) $data[] = $row;
     return $data;
@@ -336,7 +336,7 @@ function uploadGambar($file, $folder = 'uploads/') {
     $ext     = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     $allowed = ['jpg','jpeg','png','webp'];
     if (!in_array($ext, $allowed)) return null;
-    if ($file['size'] > 2 * 1024 * 1024) return null; // max 2MB
+    if ($file['size'] > 5 * 1024 * 1024) return null; // max 5MB
     $nama    = uniqid('img_') . '.' . $ext;
     $target  = $folder . $nama;
     if (!is_dir($folder)) mkdir($folder, 0755, true);

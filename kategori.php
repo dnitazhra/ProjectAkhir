@@ -9,42 +9,42 @@ $user = $_SESSION['user'] ?? null;
 $kategori_aktif = $_GET['kategori'] ?? 'Semua';
 $search         = trim($_GET['q'] ?? '');
 
-// Dari DB
+// Dari DB — deduplicate kategori
 $kategori_db   = getKategoriAll($conn);
-$kategori_list = array_merge(['Semua'], array_column($kategori_db, 'nama'));
+$nama_kategori = array_unique(array_column($kategori_db, 'nama'));
+$kategori_list = array_merge(['Semua'], array_values($nama_kategori));
+
+// Ambil SEMUA produk untuk hitung count per kategori
+$semua_produk_db = getProdukAll($conn);
+$counts = ['Semua' => count($semua_produk_db)];
+foreach ($semua_produk_db as $p) {
+    $kat = $p['kategori'];
+    $counts[$kat] = ($counts[$kat] ?? 0) + 1;
+}
+
 $produk_tampil = getProdukFilter($conn, $kategori_aktif, $search);
-$counts        = getKategoriCount($conn);
 $cart_count    = $user ? getCartCount($conn, $user['id_user']) : 0;
-$search         = trim($_GET['q'] ?? '');
 
-// Data dummy (nanti diganti query DB)
-$semua_produk = [
-    ['id' => 1, 'nama' => 'Basreng',         'harga' => 15000, 'kategori' => 'Snack Kering', 'gambar' => '', 'satuan' => '250g', 'stok' => 50],
-    ['id' => 2, 'nama' => 'Kripik Kaca',     'harga' => 10000, 'kategori' => 'Snack Kering', 'gambar' => '', 'satuan' => '250g', 'stok' => 50],
-    ['id' => 3, 'nama' => 'Seblak Kering',   'harga' => 15000, 'kategori' => 'Snack Kering', 'gambar' => '', 'satuan' => '250g', 'stok' => 50],
-    ['id' => 4, 'nama' => 'Makaroni Kering', 'harga' => 7000,  'kategori' => 'Snack Kering', 'gambar' => '', 'satuan' => '250g', 'stok' => 50],
-    ['id' => 5, 'nama' => 'Brownis',         'harga' => 20000, 'kategori' => 'Kue Kering',   'gambar' => '', 'satuan' => '250g', 'stok' => 50],
-    ['id' => 6, 'nama' => 'Cookies',         'harga' => 5000,  'kategori' => 'Kue Kering',   'gambar' => '', 'satuan' => 'pcs',  'stok' => 50],
-    ['id' => 7, 'nama' => 'Kastengel',       'harga' => 35000, 'kategori' => 'Kue Kering',   'gambar' => '', 'satuan' => '250g', 'stok' => 50],
-    ['id' => 8, 'nama' => 'Nastar',          'harga' => 35000, 'kategori' => 'Kue Kering',   'gambar' => '', 'satuan' => '250g', 'stok' => 50],
-];
-
-// Filter
-$produk_tampil = array_filter($semua_produk, function($p) use ($kategori_aktif, $search) {
-    $cocok_kategori = ($kategori_aktif === 'Semua') || ($p['kategori'] === $kategori_aktif);
-    $cocok_search   = empty($search) || stripos($p['nama'], $search) !== false;
-    return $cocok_kategori && $cocok_search;
-});
-
-$kategori_list = ['Semua', 'Snack Kering', 'Kue Kering'];
-$cart_count    = 0;
+// Ambil top 3 id produk best seller (berdasarkan total terjual dari pesanan selesai)
+$res_bs = mysqli_query($conn,
+    "SELECT dp.id_produk
+     FROM detail_pesanan dp
+     JOIN pesanan ps ON dp.id_pesanan = ps.id_pesanan
+     WHERE ps.status = 'selesai'
+     GROUP BY dp.id_produk
+     ORDER BY SUM(dp.jumlah) DESC
+     LIMIT 3");
+$best_seller_ids = [];
+while ($row = mysqli_fetch_assoc($res_bs)) {
+    $best_seller_ids[] = $row['id_produk'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Produk - Happy Snack</title>
+  <title>Produk - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -230,6 +230,27 @@ $cart_count    = 0;
       font-weight: 600;
     }
 
+    /* ---- Label Best Seller ---- */
+    .produk-card { position: relative; }
+    .badge-best-seller {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      z-index: 2;
+      box-shadow: 0 2px 6px rgba(217,119,6,0.4);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
     @media (max-width: 768px) {
       .kategori-page { flex-direction: column; padding: 16px; gap: 16px; }
       .filter-sidebar { width: 100%; position: static; display: none; }
@@ -242,57 +263,7 @@ $cart_count    = 0;
 </head>
 <body>
 
-<!-- ===== SIDEBAR OVERLAY ===== -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-<!-- ===== SIDEBAR MOBILE ===== -->
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <span class="sidebar-logo">Happy Snack</span>
-    <button class="sidebar-close" onclick="closeSidebar()"><i class="fa fa-times"></i></button>
-  </div>
-  <div class="sidebar-nav">
-    <a href="index.php"><i class="fa fa-home"></i> Beranda</a>
-    <a href="kategori.php" class="active"><i class="fa fa-th-large"></i> Kategori</a>
-    <a href="keranjang.php"><i class="fa fa-shopping-cart"></i> Keranjang</a>
-    <?php if ($user): ?>
-      <a href="profil.php"><i class="fa fa-user"></i> Profil</a>
-      <a href="logout.php"><i class="fa fa-sign-out-alt"></i> Keluar</a>
-    <?php else: ?>
-      <a href="login.php"><i class="fa fa-sign-in-alt"></i> Masuk</a>
-      <a href="register.php"><i class="fa fa-user-plus"></i> Daftar</a>
-    <?php endif; ?>
-  </div>
-</nav>
-
-<!-- ===== NAVBAR ===== -->
-<header class="navbar">
-  <div class="navbar-logo">
-    <img src="logo.png/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
-  </div>
-  <form class="navbar-search" action="kategori.php" method="GET">
-    <?php if ($kategori_aktif !== 'Semua'): ?>
-      <input type="hidden" name="kategori" value="<?= htmlspecialchars($kategori_aktif) ?>">
-    <?php endif; ?>
-    <button type="submit"><i class="fa fa-search"></i></button>
-    <input type="text" name="q" placeholder="Cari produk..." value="<?= htmlspecialchars($search) ?>">
-  </form>
-  <div class="navbar-actions">
-    <a href="<?= $user ? 'profil.php' : 'login.php' ?>" class="nav-btn">
-      <i class="fa fa-user"></i>
-    </a>
-    <a href="keranjang.php" class="nav-btn">
-      <i class="fa fa-shopping-cart"></i>
-      <?php if ($cart_count > 0): ?>
-        <span class="badge"><?= $cart_count ?></span>
-      <?php endif; ?>
-    </a>
-    <button class="nav-btn btn-menu" onclick="openSidebar()">
-      <i class="fa fa-bars"></i>
-    </button>
-  </div>
-</header>
+<?php include 'includes/navbar.php'; ?>
 
 <!-- ===== KONTEN ===== -->
 <div class="kategori-page">
@@ -305,10 +276,6 @@ $cart_count    = 0;
       </div>
       <div class="filter-list">
         <?php
-        $counts = ['Semua' => count($semua_produk)];
-        foreach ($semua_produk as $p) {
-            $counts[$p['kategori']] = ($counts[$p['kategori']] ?? 0) + 1;
-        }
         foreach ($kategori_list as $kat):
           $is_active = ($kategori_aktif === $kat);
           $url = 'kategori.php?kategori=' . urlencode($kat);
@@ -374,8 +341,15 @@ $cart_count    = 0;
       </div>
     <?php else: ?>
       <div class="produk-grid">
-        <?php foreach ($produk_tampil as $p): ?>
+        <?php foreach ($produk_tampil as $p):
+          $is_best_seller = in_array($p['id'], $best_seller_ids);
+        ?>
         <a href="produk.php?id=<?= $p['id'] ?>" class="produk-card">
+          <?php if ($is_best_seller): ?>
+          <div class="badge-best-seller">
+            <i class="fa fa-fire"></i> Best Seller
+          </div>
+          <?php endif; ?>
           <div class="produk-card-img">
             <?php if (!empty($p['gambar'])): ?>
               <img src="uploads/<?= htmlspecialchars($p['gambar']) ?>" alt="<?= htmlspecialchars($p['nama']) ?>">
@@ -405,16 +379,6 @@ $cart_count    = 0;
 <?php include 'includes/footer.php'; ?>
 
 <script>
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('active');
-  document.getElementById('sidebarOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('active');
-  document.getElementById('sidebarOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
 function toggleFilter() {
   document.getElementById('filterSidebar').classList.toggle('open');
 }

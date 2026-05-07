@@ -23,7 +23,7 @@ unset($_SESSION['pesanan_kode'], $_SESSION['pesanan_total'], $_SESSION['pesanan_
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pesanan Berhasil - Happy Snack</title>
+  <title>Pesanan Berhasil - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -210,10 +210,10 @@ unset($_SESSION['pesanan_kode'], $_SESSION['pesanan_total'], $_SESSION['pesanan_
 <header class="navbar">
   <div class="navbar-logo">
     <img src="logo.png/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
+    <h2>lavo.id</h2>
   </div>
   <div class="navbar-actions">
-    <a href="<?= $user ? 'profil.php' : 'login.php' ?>" class="nav-btn"><i class="fa fa-user"></i></a>
+    <a href="<?= $user ? ($user['role']==='admin' ? 'admin/dashboard.php' : 'profil.php') : 'login.php' ?>" class="nav-btn"><i class="fa fa-user"></i></a>
     <a href="keranjang.php" class="nav-btn"><i class="fa fa-shopping-cart"></i></a>
   </div>
 </header>
@@ -231,7 +231,13 @@ unset($_SESSION['pesanan_kode'], $_SESSION['pesanan_total'], $_SESSION['pesanan_
     </div>
 
     <h2>Pesanan Berhasil!</h2>
-    <p>Terima kasih atas pesanan Anda.<br>Kami akan segera memprosesnya.</p>
+    <p>
+      <?php if (isset($_GET['transfer'])): ?>
+        Bukti transfer kamu sudah kami terima. Pesanan akan diproses setelah pembayaran dikonfirmasi.
+      <?php else: ?>
+        Terima kasih atas pesanan Anda.<br>Kami akan segera memprosesnya.
+      <?php endif; ?>
+    </p>
 
     <!-- Info Pesanan -->
     <div class="pesanan-info">

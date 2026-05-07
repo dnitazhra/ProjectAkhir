@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ulasan Berhasil - Happy Snack</title>
+  <title>Ulasan Berhasil - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -107,10 +107,10 @@
 <header class="navbar">
   <div class="navbar-logo">
     <img src="logo.png/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
+    <h2>lavo.id</h2>
   </div>
   <div class="navbar-actions">
-    <a href="<?= $user ? 'profil.php' : 'login.php' ?>" class="nav-btn"><i class="fa fa-user"></i></a>
+    <a href="<?= $user ? ($user['role']==='admin' ? 'admin/dashboard.php' : 'profil.php') : 'login.php' ?>" class="nav-btn"><i class="fa fa-user"></i></a>
     <a href="keranjang.php" class="nav-btn"><i class="fa fa-shopping-cart"></i></a>
   </div>
 </header>
@@ -126,7 +126,7 @@
     <h2>Terima Kasih atas<br>Ulasan Anda!</h2>
     <p>Ulasan Anda sangat berarti bagi kami dan membantu pelanggan lain dalam memilih produk terbaik.</p>
     <div class="sukses-actions">
-      <a href="profil.php" class="btn-lihat">
+      <a href="ulasan-saya.php" class="btn-lihat">
         <i class="fa fa-list"></i> Lihat Ulasan Saya
       </a>
       <a href="kategori.php" class="btn-belanja">
@@ -142,7 +142,7 @@
 <script>
 function bagikan() {
   if (navigator.share) {
-    navigator.share({ title: 'Happy Snack', text: 'Coba snack enak di Happy Snack!', url: window.location.origin });
+    navigator.share({ title: 'lavo.id', text: 'Coba snack enak di lavo.id!', url: window.location.origin });
   } else {
     navigator.clipboard.writeText(window.location.origin);
     alert('Link disalin ke clipboard!');

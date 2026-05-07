@@ -39,7 +39,7 @@ $cart_count = $user ? getCartCount($conn, $user['id_user']) : 0;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= htmlspecialchars($produk['nama']) ?> - Happy Snack</title>
+  <title><?= htmlspecialchars($produk['nama']) ?> - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -361,46 +361,7 @@ $cart_count = $user ? getCartCount($conn, $user['id_user']) : 0;
 </head>
 <body>
 
-<!-- Sidebar & Overlay -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <span class="sidebar-logo">Happy Snack</span>
-    <button class="sidebar-close" onclick="closeSidebar()"><i class="fa fa-times"></i></button>
-  </div>
-  <div class="sidebar-nav">
-    <a href="index.php"><i class="fa fa-home"></i> Beranda</a>
-    <a href="kategori.php"><i class="fa fa-th-large"></i> Kategori</a>
-    <a href="keranjang.php"><i class="fa fa-shopping-cart"></i> Keranjang</a>
-    <?php if ($user): ?>
-      <a href="profil.php"><i class="fa fa-user"></i> Profil</a>
-      <a href="logout.php"><i class="fa fa-sign-out-alt"></i> Keluar</a>
-    <?php else: ?>
-      <a href="login.php"><i class="fa fa-sign-in-alt"></i> Masuk</a>
-      <a href="register.php"><i class="fa fa-user-plus"></i> Daftar</a>
-    <?php endif; ?>
-  </div>
-</nav>
-
-<!-- Navbar -->
-<header class="navbar">
-  <div class="navbar-logo">
-    <img src="logo.png/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
-  </div>
-  <form class="navbar-search" action="kategori.php" method="GET">
-    <button type="submit"><i class="fa fa-search"></i></button>
-    <input type="text" name="q" placeholder="Cari produk...">
-  </form>
-  <div class="navbar-actions">
-    <a href="<?= $user ? 'profil.php' : 'login.php' ?>" class="nav-btn"><i class="fa fa-user"></i></a>
-    <a href="keranjang.php" class="nav-btn">
-      <i class="fa fa-shopping-cart"></i>
-      <?php if ($cart_count > 0): ?><span class="badge"><?= $cart_count ?></span><?php endif; ?>
-    </a>
-    <button class="nav-btn btn-menu" onclick="openSidebar()"><i class="fa fa-bars"></i></button>
-  </div>
-</header>
+<?php include 'includes/navbar.php'; ?>
 
 <!-- Konten -->
 <div class="produk-detail-page">
@@ -538,7 +499,11 @@ $cart_count = $user ? getCartCount($conn, $user['id_user']) : 0;
       ?>
       <a href="produk.php?id=<?= $p['id'] ?>" class="produk-card">
         <div class="produk-card-img">
-          <span class="img-placeholder"><i class="fa fa-image"></i></span>
+          <?php if (!empty($p['gambar'])): ?>
+            <img src="uploads/<?= htmlspecialchars($p['gambar']) ?>" alt="<?= htmlspecialchars($p['nama']) ?>" style="width:100%;height:100%;object-fit:cover;">
+          <?php else: ?>
+            <span class="img-placeholder"><i class="fa fa-image"></i></span>
+          <?php endif; ?>
         </div>
         <div class="produk-card-body">
           <div class="produk-card-kategori"><?= htmlspecialchars($p['kategori']) ?></div>
@@ -576,35 +541,35 @@ function ubahQty(delta) {
 }
 
 function addToCart(id) {
-  const qty = parseInt(document.getElementById('qty').value);
-  fetch('ajax/add-to-cart.php', {
+  const isLoggedIn = <?= (isset($user) && $user) ? 'true' : 'false' ?>;
+  if (!isLoggedIn) { window.location.href = 'login.php'; return; }
+  const qty = parseInt(document.getElementById('qty').value);  fetch('ajax/add-to-cart.php', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ id_produk: id, jumlah: qty, varian: varianDipilih })
   })
   .then(r => r.json())
-  .then(data => { if (data.success) showToast('Produk ditambahkan ke keranjang!'); })
+  .then(data => {
+    if (data.success) {
+      showToast('✅ Produk ditambahkan ke keranjang!');
+    } else if (data.redirect) {
+      window.location.href = data.redirect;
+    } else {
+      showToast('⚠️ ' + (data.message || 'Gagal menambahkan produk'), 'error');
+    }
+  })
   .catch(() => { window.location.href = 'login.php'; });
 }
 
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('active');
-  document.getElementById('sidebarOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('active');
-  document.getElementById('sidebarOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
-function showToast(msg) {
+function showToast(msg, type = 'success') {
   const t = document.createElement('div');
   t.textContent = msg;
+  const bg = type === 'error' ? '#dc2626' : '#1a1a1a';
   t.style.cssText = `position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-    background:#1a1a1a;color:white;padding:12px 24px;border-radius:9999px;
+    background:${bg};color:white;padding:12px 24px;border-radius:9999px;
     font-size:14px;font-weight:600;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.3)`;
   document.body.appendChild(t);
-  setTimeout(() => t.remove(), 2500);
+  setTimeout(() => t.remove(), 3000);
 }
 </script>
 

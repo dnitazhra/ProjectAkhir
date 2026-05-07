@@ -18,7 +18,7 @@ $cart_count = count($keranjang);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Keranjang Saya - Happy Snack</title>
+  <title>Keranjang Saya - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -311,7 +311,7 @@ $cart_count = count($keranjang);
       margin-top: 10px;
       transition: all var(--transition);
     }
-
+   
     .btn-lanjut-belanja:hover { background: var(--primary); color: white; }
 
     /* Empty cart */
@@ -334,46 +334,7 @@ $cart_count = count($keranjang);
 </head>
 <body>
 
-<!-- Sidebar & Overlay -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <span class="sidebar-logo">Happy Snack</span>
-    <button class="sidebar-close" onclick="closeSidebar()"><i class="fa fa-times"></i></button>
-  </div>
-  <div class="sidebar-nav">
-    <a href="index.php"><i class="fa fa-home"></i> Beranda</a>
-    <a href="kategori.php"><i class="fa fa-th-large"></i> Kategori</a>
-    <a href="keranjang.php" class="active"><i class="fa fa-shopping-cart"></i> Keranjang</a>
-    <?php if ($user): ?>
-      <a href="profil.php"><i class="fa fa-user"></i> Profil</a>
-      <a href="logout.php"><i class="fa fa-sign-out-alt"></i> Keluar</a>
-    <?php else: ?>
-      <a href="login.php"><i class="fa fa-sign-in-alt"></i> Masuk</a>
-      <a href="register.php"><i class="fa fa-user-plus"></i> Daftar</a>
-    <?php endif; ?>
-  </div>
-</nav>
-
-<!-- Navbar -->
-<header class="navbar">
-  <div class="navbar-logo">
-    <img src="logo.png/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
-  </div>
-  <form class="navbar-search" action="kategori.php" method="GET">
-    <button type="submit"><i class="fa fa-search"></i></button>
-    <input type="text" name="q" placeholder="Cari produk...">
-  </form>
-  <div class="navbar-actions">
-    <a href="<?= $user ? 'profil.php' : 'login.php' ?>" class="nav-btn"><i class="fa fa-user"></i></a>
-    <a href="keranjang.php" class="nav-btn">
-      <i class="fa fa-shopping-cart"></i>
-      <?php if ($cart_count > 0): ?><span class="badge"><?= $cart_count ?></span><?php endif; ?>
-    </a>
-    <button class="nav-btn btn-menu" onclick="openSidebar()"><i class="fa fa-bars"></i></button>
-  </div>
-</header>
+<?php include 'includes/navbar.php'; ?>
 
 <!-- Konten -->
 <div class="keranjang-page">
@@ -472,16 +433,6 @@ $cart_count = count($keranjang);
           <span class="label">Biaya Pengiriman</span>
           <span class="value">Rp <?= number_format($ongkir, 0, ',', '.') ?></span>
         </div>
-        <div class="ringkasan-row diskon">
-          <span class="label">Diskon Voucher</span>
-          <span class="value">-Rp <?= number_format($diskon, 0, ',', '.') ?></span>
-        </div>
-
-        <!-- Voucher -->
-        <div class="voucher-row">
-          <input type="text" id="voucherInput" placeholder="Kode voucher...">
-          <button class="btn-voucher" onclick="pakaiVoucher()">Pakai</button>
-        </div>
 
         <div class="ringkasan-total">
           <span class="label">Total Pembayaran</span>
@@ -515,11 +466,21 @@ function ubahQty(id, delta) {
   if (val < 1) val = 1;
   input.value = val;
   updateHarga(id);
-  // Sync ke DB
   fetch('ajax/update-cart.php', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ id_keranjang: id, jumlah: val })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (!data.success) {
+      showToast('⚠️ ' + data.message, 'error');
+      // Reset ke max stok
+      if (data.max_qty) {
+        input.value = data.max_qty;
+        updateHarga(id);
+      }
+    }
   });
 }
 
@@ -534,6 +495,16 @@ function updateHarga(id) {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ id_keranjang: id, jumlah: qty })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (!data.success && data.max_qty) {
+      showToast('⚠️ ' + data.message, 'error');
+      input.value = data.max_qty;
+      document.getElementById('harga-' + id).textContent =
+        'Rp ' + (harga * data.max_qty).toLocaleString('id-ID');
+      hitungTotal();
+    }
   });
 }
 
@@ -569,44 +540,15 @@ function toggleCatatan(id) {
   if (el.classList.contains('show')) el.focus();
 }
 
-function pakaiVoucher() {
-  const kode     = document.getElementById('voucherInput').value.trim();
-  const subtotal = <?= $subtotal ?>;
-  if (!kode) return;
-  fetch('ajax/cek-voucher.php', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ kode, subtotal })
-  })
-  .then(r => r.json())
-  .then(data => {
-    showToast(data.message);
-    if (data.success) {
-      diskon = data.diskon;
-      document.getElementById('total').textContent =
-        'Rp ' + (subtotal + ongkir - diskon).toLocaleString('id-ID');
-    }
-  });
-}
-
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('active');
-  document.getElementById('sidebarOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('active');
-  document.getElementById('sidebarOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
-function showToast(msg) {
+function showToast(msg, type = 'success') {
   const t = document.createElement('div');
   t.textContent = msg;
+  const bg = type === 'error' ? '#dc2626' : '#1a1a1a';
   t.style.cssText = `position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-    background:#1a1a1a;color:white;padding:12px 24px;border-radius:9999px;
+    background:${bg};color:white;padding:12px 24px;border-radius:9999px;
     font-size:14px;font-weight:600;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.3)`;
   document.body.appendChild(t);
-  setTimeout(() => t.remove(), 2500);
+  setTimeout(() => t.remove(), 3000);
 }
 </script>
 

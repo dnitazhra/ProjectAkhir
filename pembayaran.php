@@ -66,9 +66,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bayar'])) {
         $_SESSION['pesanan_kode']  = $pesanan['kode'];
         $_SESSION['pesanan_total'] = $total;
         $_SESSION['pesanan_alamat']= $alamat;
-        header("Location: pesanan-berhasil.php");
+
+        // Kalau transfer → ke halaman transfer multi-step
+        if ($bayar === 'transfer') {
+            header("Location: transfer.php");
+        } else {
+            header("Location: pesanan-berhasil.php");
+        }
         exit;
     }
+}
+
+// Ambil data lengkap user dari DB untuk auto-fill
+$user_detail = [];
+if ($user) {
+    $su = mysqli_prepare($conn, "SELECT * FROM user WHERE id_user = ?");
+    mysqli_stmt_bind_param($su, 'i', $user['id_user']);
+    mysqli_stmt_execute($su);
+    $user_detail = mysqli_fetch_assoc(mysqli_stmt_get_result($su));
+    mysqli_stmt_close($su);
 }
 
 $total      = $subtotal + $ongkir - $diskon;
@@ -79,7 +95,7 @@ $cart_count = count($keranjang);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pembayaran - Happy Snack</title>
+  <title>Pembayaran - lavo.id</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -333,7 +349,7 @@ $cart_count = count($keranjang);
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <span class="sidebar-logo">Happy Snack</span>
+    <span class="sidebar-logo">lavo.id</span>
     <button class="sidebar-close" onclick="closeSidebar()"><i class="fa fa-times"></i></button>
   </div>
   <div class="sidebar-nav">
@@ -352,7 +368,7 @@ $cart_count = count($keranjang);
 <header class="navbar">
   <div class="navbar-logo">
     <img src="logo.png/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <h2>Happy Snack</h2>
+    <h2>lavo.id</h2>
   </div>
   <div class="navbar-search" style="pointer-events:none; opacity:0.5;">
     <i class="fa fa-search" style="color:var(--text-muted)"></i>
@@ -408,12 +424,13 @@ $cart_count = count($keranjang);
               <label>Nama Lengkap</label>
               <input type="text" name="nama" class="form-control"
                      placeholder="Masukkan nama lengkap"
-                     value="<?= htmlspecialchars($user['nama'] ?? '') ?>" required>
+                     value="<?= htmlspecialchars($user_detail['nama'] ?? '') ?>" required>
             </div>
             <div class="form-group">
               <label>Nomor Telepon</label>
               <input type="tel" name="telepon" class="form-control"
-                     placeholder="0812 XXXX XXXX" required>
+                     placeholder="0812 XXXX XXXX"
+                     value="<?= htmlspecialchars($user_detail['telepon'] ?? '') ?>" required>
             </div>
           </div>
         </div>
@@ -429,18 +446,35 @@ $cart_count = count($keranjang);
           <div class="form-group">
             <label>Alamat Jalan</label>
             <input type="text" name="alamat" class="form-control"
-                   placeholder="Nama jalan, nomor rumah, blok..." required>
+                   placeholder="Nama jalan, nomor rumah, blok..."
+                   value="<?= htmlspecialchars($user_detail['alamat'] ?? '') ?>" required>
           </div>
           <div class="form-grid-2">
             <div class="form-group">
-              <label>Kota</label>
+              <label>Kecamatan</label>
+              <input type="text" name="kecamatan" class="form-control"
+                     placeholder="Kecamatan"
+                     value="<?= htmlspecialchars($user_detail['kecamatan'] ?? '') ?>">
+            </div>
+            <div class="form-group">
+              <label>Kabupaten / Kota</label>
               <input type="text" name="kota" class="form-control"
-                     placeholder="Jakarta Selatan" required>
+                     placeholder="Kabupaten / Kota"
+                     value="<?= htmlspecialchars($user_detail['kabupaten'] ?? $user_detail['kota'] ?? '') ?>" required>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Provinsi</label>
+              <input type="text" name="provinsi" class="form-control"
+                     placeholder="Provinsi"
+                     value="<?= htmlspecialchars($user_detail['provinsi'] ?? '') ?>">
             </div>
             <div class="form-group">
               <label>Kode Pos</label>
               <input type="text" name="kodepos" class="form-control"
-                     placeholder="12345" maxlength="5" required>
+                     placeholder="12345" maxlength="5"
+                     value="<?= htmlspecialchars($user_detail['kode_pos'] ?? '') ?>" required>
             </div>
           </div>
         </div>
@@ -484,30 +518,64 @@ $cart_count = count($keranjang);
         </div>
         <div class="bayar-section-body">
           <div class="metode-list">
-            <label class="metode-item active" onclick="pilihMetode(this)">
-              <input type="radio" name="pembayaran" value="gopay" checked>
-              <div class="metode-icon" style="color:#00AED6;"><i class="fa fa-wallet"></i></div>
-              <div class="metode-info">
-                <div class="metode-nama">GoPay</div>
-                <div class="metode-desc">Bayar dengan saldo GoPay</div>
-              </div>
-            </label>
-            <label class="metode-item" onclick="pilihMetode(this)">
-              <input type="radio" name="pembayaran" value="transfer">
+
+            <!-- Transfer Bank -->
+            <label class="metode-item active" onclick="pilihMetode(this); toggleTransferInfo(true)">
+              <input type="radio" name="pembayaran" value="transfer" checked>
               <div class="metode-icon" style="color:#1a56db;"><i class="fa fa-university"></i></div>
               <div class="metode-info">
-                <div class="metode-nama">Bank Transfer</div>
+                <div class="metode-nama">Transfer Bank</div>
                 <div class="metode-desc">BCA, Mandiri, BNI, BRI</div>
               </div>
             </label>
-            <label class="metode-item" onclick="pilihMetode(this)">
-              <input type="radio" name="pembayaran" value="kartu">
-              <div class="metode-icon" style="color:#7c3aed;"><i class="fa fa-credit-card"></i></div>
-              <div class="metode-info">
-                <div class="metode-nama">Kartu Kredit / Debit</div>
-                <div class="metode-desc">Visa, Mastercard</div>
+
+            <!-- Info Transfer -->
+            <div id="transferInfo" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 16px;font-size:13px;color:#1e40af;margin-top:4px;">
+              <div style="font-weight:700;margin-bottom:10px;"><i class="fa fa-info-circle"></i> Rekening Tujuan Transfer</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;background:white;border-radius:6px;padding:10px 12px;border:1px solid #bfdbfe;">
+                  <div>
+                    <div style="font-size:11px;color:#6b7280;">BCA</div>
+                    <div style="font-weight:700;font-size:15px;letter-spacing:1px;">1234 5678 90</div>
+                    <div style="font-size:12px;color:#6b7280;">a.n. lavo.id</div>
+                  </div>
+                  <button type="button" onclick="copyRek('1234567890')" style="background:#dbeafe;color:#1d4ed8;border:none;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">
+                    <i class="fa fa-copy"></i> Salin
+                  </button>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;background:white;border-radius:6px;padding:10px 12px;border:1px solid #bfdbfe;">
+                  <div>
+                    <div style="font-size:11px;color:#6b7280;">Mandiri</div>
+                    <div style="font-weight:700;font-size:15px;letter-spacing:1px;">1100 0099 8877</div>
+                    <div style="font-size:12px;color:#6b7280;">a.n. lavo.id</div>
+                  </div>
+                  <button type="button" onclick="copyRek('110000998877')" style="background:#dbeafe;color:#1d4ed8;border:none;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">
+                    <i class="fa fa-copy"></i> Salin
+                  </button>
+                </div>
               </div>
+              <div style="margin-top:10px;font-size:12px;color:#6b7280;">
+                ⚠️ Setelah transfer, kamu akan diminta upload bukti pembayaran di halaman berikutnya.
+              </div>
+            </div>
+
+            <!-- COD -->
+            <label class="metode-item" onclick="pilihMetode(this); toggleTransferInfo(false)">
+              <input type="radio" name="pembayaran" value="cod">
+              <div class="metode-icon" style="color:#16a34a;"><i class="fa fa-money-bill-wave"></i></div>
+              <div class="metode-info">
+                <div class="metode-nama">COD (Bayar di Tempat)</div>
+                <div class="metode-desc">Bayar tunai saat paket tiba</div>
+              </div>
+              <span style="background:#dcfce7;color:#15803d;font-size:11px;font-weight:700;padding:3px 8px;border-radius:9999px;flex-shrink:0;">Tunai</span>
             </label>
+
+            <!-- Info COD -->
+            <div id="codNote" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 14px;font-size:13px;color:#15803d;margin-top:4px;">
+              <i class="fa fa-info-circle"></i>
+              <strong>Catatan COD:</strong> Siapkan uang tunai sesuai total tagihan saat kurir tiba.
+            </div>
+
           </div>
         </div>
       </div>
@@ -558,15 +626,33 @@ function pilihMetode(el) {
   group.querySelectorAll('.metode-item').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
 
-  // Update ongkir jika kurir
   const radio = el.querySelector('input[name="kurir"]');
   if (radio) {
     const h = kurirHarga[radio.value] || 15000;
-    document.getElementById('hargaKurir').textContent =
-      'Rp ' + h.toLocaleString('id-ID');
-    document.getElementById('totalBayar').textContent =
-      'Rp ' + (subtotal + h - diskon).toLocaleString('id-ID');
+    document.getElementById('hargaKurir').textContent = 'Rp ' + h.toLocaleString('id-ID');
+    document.getElementById('totalBayar').textContent = 'Rp ' + (subtotal + h - diskon).toLocaleString('id-ID');
   }
+
+  const radioMetode = el.querySelector('input[name="pembayaran"]');
+  if (radioMetode && radioMetode.value !== 'cod') {
+    toggleCodNote(false);
+  }
+}
+
+function toggleCodNote(show) {
+  const note = document.getElementById('codNote');
+  if (note) note.style.display = show ? 'block' : 'none';
+}
+
+function toggleTransferInfo(show) {
+  const ti = document.getElementById('transferInfo');
+  const cn = document.getElementById('codNote');
+  if (ti) ti.style.display = show ? 'block' : 'none';
+  if (cn) cn.style.display = show ? 'none' : 'block';
+}
+
+function copyRek(nomor) {
+  navigator.clipboard.writeText(nomor).then(() => showToast('Nomor rekening disalin!'));
 }
 
 function validasiForm() {
